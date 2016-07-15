@@ -45,9 +45,6 @@
                     <li>
                         <a href="/crear/articulo">Nueva Entrada</a>
                     </li>
-                                        <li>
-                        <a href="/chat/">Chat</a>
-                    </li>
                     <li>
                         <#if username == "null">
                             <a href="/login">Log In</a>
@@ -102,16 +99,19 @@
                 </ul>
 
             </div>
-        <!--
-          <div style="height: 300px; border: 1px solid black; clear: both">
+        <div class="col-md-4">
+                  <div style="height: 300px; border: 1px solid black; clear: both">
                 <script src="../js/WebSocket.js"></script>
-                <ul id="userlist"> <!-- Built by JS --> <!-- </ul>
-                <div id="chat">    <!-- Built by JS --> <!-- </div>
+              <p>Online Users</p>
+                <ul id="userlist"> <!-- Built by JS --> </ul>
+              <hr>
+                <div id="chat">    <!-- Built by JS --> </div>
                 <div id="chatControls">
                     <input id="message" placeholder="Type your message">
                     <button id="send">Send</button>
                 </div>
-            </div> -->
+            </div> 
+            </div>
 
 
         <hr>
