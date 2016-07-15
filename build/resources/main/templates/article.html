@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div>
+        <a href="/eliminar/${article.id}"> <p>eliminar</p></a>
+
+        <h1>
+            ${article.titulo}
+        </h1>
+        <p>
+            ${article.contenido}
+        </p>
+        <p>
+            <#list articleTags as tag>
+               <i> #${tag.getTag()} </i>
+            </#list>
+        </p>
+    </div>
+
+    <form action="/agregarComentario/${article.id}" method="post">
+        <input type="text" name="comment" placeholder="Comente aqui...">
+
+        </input>
+        <button name = "send" type="submit">
+            Comentar
+        </button>
+    </form>
+    <div>
+        <#list articleComments as comment>
+            <p>
+                ${comment.getComment()}
+            </p>
+        </#list>
+    </div>
+
+</body>
+</html>

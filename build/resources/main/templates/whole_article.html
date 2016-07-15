@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Blog Post - Start Bootstrap Template</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <link href="/css/blog-post.css" rel="stylesheet" >
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Spark Blog</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="/">Articulos</a>
+                    </li>
+                    <li>
+                        <a href="/crear/articulo">Nueva Entrada</a>
+                    </li>
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+
+            <!-- Blog Post Content Column -->
+            <div class="col-lg-12">
+
+                <!-- Blog Post -->
+
+                <h2>
+                    <a href="#">${article.getTitulo()}</a>
+                </h2>
+                <p class="lead">
+                    by <a href="#">${author}</a>
+                </p>
+                <hr>
+
+                <!-- Post Content -->
+                <!--Referencia a Articulo completo-->
+                <p class="lead">${article.titulo}</p>
+                <p>${article.getContenido()}</p>
+                <p>
+                    <#list articleTags as tag>
+                        <i> <a href="/articulos/etiqueta/${tag.getId()}">#${tag.getTag()}</a> </i>
+                    </#list>
+                </p>
+                <p>
+                    <h4 style="display: inline-block">Likes:${article.getLikes()}</h4>
+                    <h4 style="display: inline-block">Dislikes:${article.getDislikes()}</h4>
+                </p>
+                <hr>
+
+                <!--Boton Eliminar Entrada-->
+                <hr>
+                <a href="/eliminar/${article.id}" class="btn btn-primary">Eliminar Entrada</a>
+                <a href="/editar/${article.id}" class="btn btn-primary">Editar Entrada</a>
+                <a href="/like/${article.id}" class="btn btn-primary">Like</a>
+                <a href="/dislike/${article.id}" class="btn btn-primary">Dislike</a>
+                <hr>
+                <!-- Blog Comments -->
+
+                <!-- Comments Form -->
+                <div class="well">
+                    <h4>Leave a Comment:</h4>
+                    <form action="/agregarComentario/${article.id}" method="post">
+                        <div class="form-group">
+                            <input type="text" name="comment" class="form-control" rows="3"></input>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Comentar</button>
+                    </form>
+                </div>
+
+                <hr>
+
+                <!-- Posted Comments -->
+
+                <!-- Comment -->
+                <div>
+
+                </div>
+                <#list articleComments as comment>
+                <div class="media">
+                    <a class="pull-left" href="#">
+                        <img class="media-object" src="http://placehold.it/64x64" alt="">
+                    </a>
+                    <div class="media-body">
+
+                            <h4 class="media-heading">
+                                <small>${comment.getAuthor().getUsername()  }</small>
+                            </h4>
+                            <p>
+                                ${comment.getComment()}
+                            </p>
+                    </div>
+                </div>
+
+                </#list>
+
+            </div>
+
+        </div>
+
+        <h1>Ejemplos de llamada WebSocket entre el cliente y el servidor</h1>
+        <div id="chatControls">
+            <input id="message" placeholder="Type your messsage here"/>
+            <button id="send">Send</button>
+        </div>
+        <ul id="userlist"> <!-- Built by JS --> </ul>
+        <div id="chat"> <!-- Built by JS--> </div>
+
+        <script>
+//            $(document).ready(function () {
+
+
+                    var webSocket = new WebSocket("ws://" + location.hostname + ":" + location.port + "/mensajeServidor");
+
+                    webSocket.onopen = function () {
+                        alert("You are now chatting!");
+                    }
+
+                    webSocket.onmessage = function (message) {
+                        updateChat(message);
+                    };
+
+                    webSocket.onclose = function () {
+                        alert("WebsSocket connection closed")
+                    };
+
+                    id("send").addEventListener("click", function () {
+                        sendMessage(id("message").value);
+                    });
+
+                    id("message").addEventListener("keypress", function (e) {
+                        if (e.keyCode == 13) {
+                            sendMessage(e.target.value);
+                        }
+                    });
+
+                    function sendMessage(message) {
+                        if (message != "") {
+                            webSocket.send(message);
+                            id("message").value = "";
+                        }
+                    }
+
+                    function updateChat(message) {
+                        var data = JSON.parse(message.data);
+                        insert("chat", data.userMessage);
+                        id("userlist").innerHTML = "";
+                        data.userlist.forEach(function (user) {
+                            insert("userlist", "* <li style='display: inline-block; color: #b45314'>" + user + "</li> * ");
+                        });
+                    }
+
+                    function insert(targetID, message) {
+                        id(targetID).insertAdjacentHTML("afterbegin", message);
+                    }
+
+                    function id(id) {
+                        return document.getElementById(id);
+                    }
+//            });
+        </script>
+        <!-- /.row -->
+
+        <hr>
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; Spark Blog</p>
+                </div>
+            </div>
+            <!-- /.row -->
+        </footer>
+
+    </div>
+    <!-- /.container -->
+
+    <!-- jQuery -->
+    <script src="../../../../../startbootstrap-blog-post-1.0.4/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../../../../../startbootstrap-blog-post-1.0.4/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

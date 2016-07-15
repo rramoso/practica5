@@ -1,0 +1,7 @@
+.list-friends {
+
+    list-style: none;
+    font-size: 13px;
+    overflow-y: scroll;
+    height: 88%;
+}

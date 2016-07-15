@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog</title>
+</head>
+<body>
+    <#list articles as article>
+
+        <li><div>
+                <a href="/articulo/${article.id}">
+                    <h2>${article.titulo}</h2>
+                </a>
+                <p> ${article.previewText()}</p>
+                <p></p>
+            </div>
+        </li>
+
+    </#list>
+</body>
+</html>
