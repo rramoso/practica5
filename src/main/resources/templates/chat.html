@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+    <link href="/css/chatbootstrap.css" rel="stylesheet" />
+
+</head>
+<body style="font-family:Verdana">
+  <div class="container">
+<div class="row " style="padding-top:40px;">
+    <h3 class="text-center" >Spark Blog Chat </h3>
+    <br /><br />
+    <div class="col-md-8">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                RECENT CHAT HISTORY
+            </div>
+            <div class="panel-body">
+            </div>
+            <div class="panel-footer">
+                 <script src="../js/WebSocket.js"></script>
+                <div id="chat">    <!-- Built by JS --> </div>
+                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Enter Message" />
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-info" type="button">SEND</button>
+                                    </span>
+                                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+               ONLINE USERS
+            </div>
+            <div class="panel-body">
+                    <ul id="userlist"> <!-- Built by JS --> </ul>
+                </div>
+            </div>
+        
+    </div>
+</div>
+  </div>
+</body>
+</html>
